@@ -21,6 +21,15 @@ Floating Orbs is a RuneLite plugin that adds customizable, movable Prayer and Sp
 - Configurable blink interval and thresholds
 - Auto-hide behavior while blocking interfaces are open
 
+## Visual States
+
+![Floating Orbs Visual States](docs/media/floating-orbs-showcase-v8.png)
+
+Order in the image:
+- Prayer states first
+- Special states second
+- Combined prayer + spec states last
+
 ## Compliance Notes
 
 - Designed for direct user interaction (uses 1:1 clicks)
@@ -57,3 +66,4 @@ Run `com.floatingorbs.FloatingOrbsPluginLauncher` from your IDE.
 ## License
 
 MIT. See `LICENSE`.
+
