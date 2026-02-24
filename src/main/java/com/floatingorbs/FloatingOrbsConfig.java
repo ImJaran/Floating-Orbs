@@ -39,7 +39,7 @@ public interface FloatingOrbsConfig extends Config
         return true;
     }
 
-    @Range(min = 60, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "buttonScale",
         name = "Prayer overall size (%)",
@@ -64,7 +64,7 @@ public interface FloatingOrbsConfig extends Config
         return true;
     }
 
-    @Range(min = 50, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "buttonWidthScale",
         name = "Prayer width scale (%)",
@@ -77,7 +77,7 @@ public interface FloatingOrbsConfig extends Config
         return 100;
     }
 
-    @Range(min = 50, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "buttonHeightScale",
         name = "Prayer height scale (%)",
@@ -240,7 +240,7 @@ public interface FloatingOrbsConfig extends Config
         return 6;
     }
 
-    @Range(min = 60, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "specialButtonScale",
         name = "Special overall size (%)",
@@ -265,7 +265,7 @@ public interface FloatingOrbsConfig extends Config
         return true;
     }
 
-    @Range(min = 50, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "specialButtonWidthScale",
         name = "Special width scale (%)",
@@ -278,7 +278,7 @@ public interface FloatingOrbsConfig extends Config
         return 100;
     }
 
-    @Range(min = 50, max = 300)
+    @Range(min = 50, max = 100)
     @ConfigItem(
         keyName = "specialButtonHeightScale",
         name = "Special height scale (%)",
@@ -404,3 +404,5 @@ public interface FloatingOrbsConfig extends Config
         return 25;
     }
 }
+
+

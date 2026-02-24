@@ -7,7 +7,7 @@ Floating Orbs is a RuneLite plugin that adds customizable, movable Prayer and Sp
 - Adds a movable Prayer orb button
 - Adds a movable Special Attack orb button
 - Supports snap mode so both orbs move together
-- Supports orb size, shape, color, and blink customization
+- Supports orb shape, color, blink, and reduced-size customization (50-100%)
 - Supports optional points text display
 - Uses 1:1 clicks in-game (no macro behavior)
 
@@ -16,7 +16,7 @@ Floating Orbs is a RuneLite plugin that adds customizable, movable Prayer and Sp
 - Prayer orb toggles quick prayers
 - Special orb toggles special attack
 - Round or square orb styles
-- Per-orb scale and width/height scaling
+- Per-orb scale and width/height scaling (limited to 50-100%)
 - Per-orb ON/OFF/BLINK colors
 - Configurable blink interval and thresholds
 - Auto-hide behavior while blocking interfaces are open
@@ -33,6 +33,7 @@ Order in the image:
 ## Compliance Notes
 
 - Designed for direct user interaction (uses 1:1 clicks)
+- Orb click zones can only be reduced (50-100%), never enlarged
 - No botting, no loops, no automated gameplay logic
 - Intended to stay within RuneLite and Jagex rules
 

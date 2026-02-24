@@ -49,6 +49,7 @@ Suggested PR summary:
 - Adds Floating Orbs plugin
 - Movable prayer/special orbs with snap support
 - Custom colors/sizing/blink and optional points display
+- Orb sizing only allows reduction (50-100%), never enlargement
 - uses 1:1 clicks only, no automation behavior
 
 ## 4. Review Readiness Checklist

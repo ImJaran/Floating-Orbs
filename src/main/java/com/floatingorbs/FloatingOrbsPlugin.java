@@ -245,7 +245,7 @@ public class FloatingOrbsPlugin extends Plugin
 
     int getPrayerButtonScale()
     {
-        return config.buttonScale();
+        return Math.max(50, Math.min(100, config.buttonScale()));
     }
 
     boolean isPrayerRoundButton()
@@ -255,12 +255,12 @@ public class FloatingOrbsPlugin extends Plugin
 
     int getPrayerButtonWidthScale()
     {
-        return config.buttonWidthScale();
+        return Math.max(50, Math.min(100, config.buttonWidthScale()));
     }
 
     int getPrayerButtonHeightScale()
     {
-        return config.buttonHeightScale();
+        return Math.max(50, Math.min(100, config.buttonHeightScale()));
     }
 
     Color getPrayerColorOn()
@@ -322,7 +322,7 @@ public class FloatingOrbsPlugin extends Plugin
 
     int getSpecialButtonScale()
     {
-        return config.specialButtonScale();
+        return Math.max(50, Math.min(100, config.specialButtonScale()));
     }
 
     boolean isSpecialRoundButton()
@@ -332,12 +332,12 @@ public class FloatingOrbsPlugin extends Plugin
 
     int getSpecialButtonWidthScale()
     {
-        return config.specialButtonWidthScale();
+        return Math.max(50, Math.min(100, config.specialButtonWidthScale()));
     }
 
     int getSpecialButtonHeightScale()
     {
-        return config.specialButtonHeightScale();
+        return Math.max(50, Math.min(100, config.specialButtonHeightScale()));
     }
 
     Color getSpecialColorOn()
@@ -660,3 +660,5 @@ public class FloatingOrbsPlugin extends Plugin
         specialOverlayEnabled = false;
     }
 }
+
+
