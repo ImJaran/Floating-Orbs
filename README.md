@@ -65,5 +65,5 @@ Run `com.floatingorbs.FloatingOrbsPluginLauncher` from your IDE.
 
 ## License
 
-MIT. See `LICENSE`.
+BSD 2-Clause. See `LICENSE`.
 
