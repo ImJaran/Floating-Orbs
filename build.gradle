@@ -13,9 +13,6 @@ def runeLiteVersion = 'latest.release'
 dependencies {
     compileOnly "net.runelite:client:${runeLiteVersion}"
 
-    compileOnly 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
-
     testImplementation "net.runelite:client:${runeLiteVersion}"
     testImplementation "net.runelite:jshell:${runeLiteVersion}"
 }

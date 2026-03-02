@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.inject.Inject;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
@@ -26,8 +25,9 @@ import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 @PluginDescriptor(
     name = "Floating Orbs",
     description = "Movable prayer and special attack orb buttons",
@@ -35,6 +35,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class FloatingOrbsPlugin extends Plugin
 {
+    private static final Logger log = LoggerFactory.getLogger(FloatingOrbsPlugin.class);
     private static final String CONFIG_GROUP = "floatingorbs";
     private static final String QUICK_PRAYER_TARGET = "<col=ff9040>Quick-prayers</col>";
     private static final String SPECIAL_ATTACK_TARGET = "<col=00ff00>Special Attack</col>";
@@ -316,7 +317,8 @@ public class FloatingOrbsPlugin extends Plugin
     int getSpecialAttackPercent()
     {
         final int raw = client.getVarpValue(VarPlayer.SPECIAL_ATTACK_PERCENT);
-        final int normalized = raw > 100 ? raw / 10 : raw;
+        // RuneLite stores special attack energy in tenths of a percent (0-1000).
+        final int normalized = (int) Math.round(raw / 10.0);
         return Math.max(0, Math.min(100, normalized));
     }
 
