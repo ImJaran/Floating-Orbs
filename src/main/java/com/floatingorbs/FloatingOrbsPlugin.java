@@ -15,7 +15,6 @@ import net.runelite.api.VarPlayer;
 import net.runelite.api.Varbits;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -39,7 +38,10 @@ public class FloatingOrbsPlugin extends Plugin
     private static final String CONFIG_GROUP = "floatingorbs";
     private static final String QUICK_PRAYER_TARGET = "<col=ff9040>Quick-prayers</col>";
     private static final String SPECIAL_ATTACK_TARGET = "<col=00ff00>Special Attack</col>";
+    private static final int QUICK_PRAYER_BUTTON_WIDGET_ID = InterfaceID.Orbs.PRAYERBUTTON;
     private static final int SPECIAL_ATTACK_BUTTON_WIDGET_ID = InterfaceID.Orbs.SPECBUTTON;
+    private static final int PRAYER_ORB_WIDGET_ID = InterfaceID.Orbs.ORB_PRAYER;
+    private static final int SPECIAL_ORB_WIDGET_ID = InterfaceID.Orbs.ORB_SPECENERGY;
     private static final int PRAYER_ICON_WIDGET_ID = InterfaceID.Orbs.PRAYER_ICON;
     private static final int SPECIAL_ICON_WIDGET_ID = InterfaceID.Orbs.SPECENERGY_ICON;
 
@@ -109,7 +111,7 @@ public class FloatingOrbsPlugin extends Plugin
         {
             final boolean enabled = isQuickPrayersEnabled();
             final String option = enabled ? "Deactivate" : "Activate";
-            clickOrb(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB, QUICK_PRAYER_TARGET, MenuAction.CC_OP, option, "Activate", "Deactivate");
+            clickOrb(QUICK_PRAYER_BUTTON_WIDGET_ID, QUICK_PRAYER_TARGET, MenuAction.CC_OP, option, "Activate", "Deactivate");
         });
     }
 
@@ -120,7 +122,7 @@ public class FloatingOrbsPlugin extends Plugin
             Widget specButton = client.getWidget(SPECIAL_ATTACK_BUTTON_WIDGET_ID);
             if (specButton == null)
             {
-                specButton = client.getWidget(WidgetInfo.MINIMAP_SPEC_ORB);
+                specButton = client.getWidget(SPECIAL_ORB_WIDGET_ID);
             }
 
             if (specButton == null)
@@ -140,15 +142,15 @@ public class FloatingOrbsPlugin extends Plugin
         });
     }
 
-    private void clickOrb(WidgetInfo widgetInfo, String fallbackTarget, MenuAction actionType, String preferredOption, String... fallbacks)
+    private void clickOrb(int widgetId, String fallbackTarget, MenuAction actionType, String preferredOption, String... fallbacks)
     {
-        final Widget orb = client.getWidget(widgetInfo);
+        final Widget orb = client.getWidget(widgetId);
         if (orb == null)
         {
             return;
         }
 
-        clickWidgetAction(orb, widgetInfo.getPackedId(), fallbackTarget, actionType, preferredOption, fallbacks);
+        clickWidgetAction(orb, widgetId, fallbackTarget, actionType, preferredOption, fallbacks);
     }
 
     private void clickWidgetAction(Widget widget, int widgetId, String fallbackTarget, MenuAction actionType, String preferredOption, String... fallbacks)
@@ -229,7 +231,7 @@ public class FloatingOrbsPlugin extends Plugin
 
     BufferedImage getPrayerOrbIconImage()
     {
-        return getOrbIconImage(PRAYER_ICON_WIDGET_ID, WidgetInfo.MINIMAP_PRAYER_ORB);
+        return getOrbIconImage(PRAYER_ICON_WIDGET_ID, PRAYER_ORB_WIDGET_ID);
     }
 
     int getCurrentPrayerPoints()
@@ -311,7 +313,7 @@ public class FloatingOrbsPlugin extends Plugin
 
     BufferedImage getSpecialOrbIconImage()
     {
-        return getOrbIconImage(SPECIAL_ICON_WIDGET_ID, WidgetInfo.MINIMAP_SPEC_ORB);
+        return getOrbIconImage(SPECIAL_ICON_WIDGET_ID, SPECIAL_ORB_WIDGET_ID);
     }
 
     int getSpecialAttackPercent()
@@ -472,7 +474,7 @@ public class FloatingOrbsPlugin extends Plugin
         lastSpecialLocation = new Point(specialPoint);
     }
 
-    private BufferedImage getOrbIconImage(int iconWidgetId, WidgetInfo fallbackWidgetInfo)
+    private BufferedImage getOrbIconImage(int iconWidgetId, int fallbackWidgetId)
     {
         int spriteId = -1;
 
@@ -482,9 +484,9 @@ public class FloatingOrbsPlugin extends Plugin
             spriteId = iconWidget.getSpriteId();
         }
 
-        if (spriteId < 0 && fallbackWidgetInfo != null)
+        if (spriteId < 0 && fallbackWidgetId > 0)
         {
-            final Widget fallbackWidget = client.getWidget(fallbackWidgetInfo);
+            final Widget fallbackWidget = client.getWidget(fallbackWidgetId);
             if (fallbackWidget != null)
             {
                 spriteId = fallbackWidget.getSpriteId();
@@ -520,54 +522,8 @@ public class FloatingOrbsPlugin extends Plugin
 
     private boolean hasBlockingInterface()
     {
-        return isWidgetVisible(WidgetInfo.BANK_CONTAINER)
-            || isWidgetVisible(WidgetInfo.BANK_PIN_CONTAINER)
-            || isWidgetVisible(WidgetInfo.GRAND_EXCHANGE_WINDOW_CONTAINER)
-            || isWidgetVisible(WidgetInfo.QUESTLIST_CONTAINER)
-            || isWidgetVisible(WidgetInfo.COLLECTION_LOG)
-            || isWidgetVisible(WidgetInfo.ACHIEVEMENT_DIARY_CONTAINER)
-            || isWidgetVisible(WidgetInfo.WORLD_MAP_VIEW)
-            || isWidgetVisible(WidgetInfo.DIALOG_OPTION)
-            || isWidgetVisible(WidgetInfo.DIALOG_NPC_TEXT)
-            || isWidgetVisible(WidgetInfo.DIALOG_PLAYER_TEXT)
-            || isWidgetVisible(WidgetInfo.DIALOG_SPRITE)
-            || isWidgetVisible(WidgetInfo.DESTROY_ITEM)
-            || isWidgetVisible(WidgetInfo.LEVEL_UP)
-            || isWidgetVisible(WidgetInfo.QUEST_COMPLETED)
-            || hasVisibleChildren(WidgetInfo.FIXED_VIEWPORT_BANK_CONTAINER)
-            || hasVisibleChildren(WidgetInfo.FIXED_VIEWPORT_INTERFACE_CONTAINER)
-            || hasVisibleChildren(WidgetInfo.RESIZABLE_VIEWPORT_INTERFACE_CONTAINER)
-            || hasVisibleChildren(WidgetInfo.RESIZABLE_VIEWPORT_BOTTOM_LINE_INTERFACE_CONTAINER);
-    }
-
-    private boolean isWidgetVisible(WidgetInfo widgetInfo)
-    {
-        final Widget widget = client.getWidget(widgetInfo);
-        return widget != null && !widget.isHidden();
-    }
-
-    private boolean hasVisibleChildren(WidgetInfo containerInfo)
-    {
-        final Widget container = client.getWidget(containerInfo);
-        if (container == null || container.isHidden())
-        {
-            return false;
-        }
-
-        final Widget[] children = container.getChildren();
-        if (children == null)
-        {
-            return false;
-        }
-
-        for (Widget child : children)
-        {
-            if (child != null && !child.isHidden())
-            {
-                return true;
-            }
-        }
-
+        // Disabled for plugin-hub compatibility until this check is reimplemented
+        // using non-deprecated component identifiers only.
         return false;
     }
 
